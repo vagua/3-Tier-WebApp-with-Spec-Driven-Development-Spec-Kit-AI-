@@ -12,24 +12,21 @@ graph TD
         A[Browser]
     end
 
-    subgraph "Frontend Tier (Served by Nginx)"
-        B(Nginx Server)
+    subgraph "Manager Node (Windows WSL)"
+        B1[Frontend Service (Nginx)]
+        B2[Backend Service (Flask/Gunicorn)]
     end
 
-    subgraph "Backend Tier (Python)"
-        C(Flask/Gunicorn API)
+    subgraph "Worker Node (Lab VM)"
+        C[(PostgreSQL Database)]
     end
 
-    subgraph "Database Tier (PostgreSQL)"
-        D[(PostgreSQL Database)]
-    end
-
-    A -- "1. User action triggers API call (e.g., GET /api/menu)" --> B
-    B -- "2. Nginx acts as reverse proxy, forwards request" --> C
-    C -- "3. Flask app receives request and executes logic" --> C
-    C -- "4. Queries the database" --> D
-    D -- "5. Returns data rows" --> C
-    C -- "6. Formats data as JSON and sends response" --> B
-    B -- "7. Forwards HTTP response to browser" --> A
-    A -- "8. JavaScript renders the data on the page" --> A
+    A -- "1. User action triggers API call (GET /api/menu, POST /api/order)" --> B1
+    B1 -- "2. Nginx forwards request to backend service via overlay network" --> B2
+    B2 -- "3. Backend executes business logic" --> B2
+    B2 -- "4. Queries database on Worker node via overlay network" --> C
+    C -- "5. Returns rows (menu/order info)" --> B2
+    B2 -- "6. Formats data as JSON and responds" --> B1
+    B1 -- "7. Forwards HTTP response to browser" --> A
+    A -- "8. Browser renders UI" --> A
 ```

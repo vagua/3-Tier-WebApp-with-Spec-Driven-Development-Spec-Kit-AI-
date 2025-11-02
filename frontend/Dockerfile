@@ -21,3 +21,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy static files from the source context
 COPY . /usr/share/nginx/html
+

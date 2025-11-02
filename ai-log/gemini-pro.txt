@@ -1,0 +1,703 @@
+virtual box 預設的ubuntu密碼會是甚麼
+
+你好！這是一個很常見的疑問。
+
+答案是：Ubuntu 在標準安裝過程中並沒有「預設密碼」。
+
+這通常有兩種情況，你可以看看你是屬於哪一種：
+
+情況一：你是「自己安裝」的 (使用 .iso 檔案)
+如果你是在 VirtualBox 中建立一個新的虛擬機，然後使用 Ubuntu 官方的 <code>.iso</code> 映像檔來一步一步安裝作業系統：
+
+在安裝過程中，Ubuntu 會有一個步驟要求你「建立使用者」並「設定您自己的密碼」。
+
+你現在在登入畫面需要輸入的密碼，就是你當時設定的那一組。
+
+VirtualBox 或 Ubuntu 都不會為你設定一個預設密碼。
+
+如果你忘記了自己設定的密碼： 不用擔心，你不需要重新安裝。你可以進入 Ubuntu 的「救援模式 (Recovery Mode)」來重設密碼。
+
+情況二：你是「匯入」現成虛擬機的 (使用 .ova/.vdi 檔案)
+如果你不是自己安裝，而是從網路上下載了一個別人已經打包好的 Ubuntu 虛擬機檔案 (例如 <code>.ova</code>, <code>.vdi</code>, 或 <code>.vmdk</code> 檔案)，然後「匯入 (Import)」到 VirtualBox 中：
+
+這種情況下，密碼就是由「該檔案的提供者」設定的。
+
+你應該回到你下載該檔案的原始網頁，上面通常會註明預設的使用者名稱 (Username) 和密碼 (Password)。
+
+常見的預設帳密 (僅供猜測)： 如果你真的找不到來源，可以嘗試以下幾組常見的組合 (使用者名稱/密碼)：
+
+ubuntu / ubuntu
+
+vagrant / vagrant
+
+user / password
+
+root / password
+
+osboxes / osboxes.org (如果來自 OSBoxes.org)
+
+或是密碼欄空白，直接按 Enter 鍵。
+
+下一步
+為了能更準確地協助你，請問你是屬於情況一 (自己安裝) 還是情況二 (下載匯入的) 呢？
+
+如果你是情況一且忘記了密碼，需要我提供在 VirtualBox 中進入救援模式來重設密碼的步驟嗎？
+
+我用virtual box去裝Ubuntu 22.04.5 LTS (Jammy Jellyfish)的iso
+
+了解了，感謝你的說明。
+
+這就100%確認是「情況一」。
+
+在你使用 .iso 檔案安裝 Ubuntu 22.04 的過程中，安裝程式會強制要求你建立一個使用者帳號並設定密碼。
+
+所以，系統並不存在「預設密碼」。你現在登入時需要輸入的密碼，就是你當時安裝過程中自己設定的那一組。
+
+接下來的推測
+我猜你現在的情況很可能是忘記了當時設定的那組密碼，對嗎？
+
+如果是這樣，請不用擔心，你不需要重灌整個虛擬機！我們可以透過 Ubuntu 的「救援模式 (Recovery Mode)」來強制重設一個新密碼。
+
+你希望我現在提供你如何在 VirtualBox 中進入 Ubuntu 救援模式並重設密碼的詳細步驟嗎？
+
+好
+
+好的，請跟我一步一步操作。這個過程是在 VirtualBox 和 Ubuntu 內部完成的，不需要額外工具。
+
+💻 如何在 VirtualBox 中重設 Ubuntu 密碼
+這個教學分為三個階段：
+
+進入 GRUB 選單 (開機選單)
+
+進入 Root 權限的終端機
+
+重設密碼並重開機
+
+階段一：進入 GRUB 開機選單
+在 VirtualBox 中，啟動你的 Ubuntu 虛擬機。
+
+立刻、持續地按住你鍵盤上的 右側 Shift 鍵。（在某些系統上可能是 Esc 鍵，但 Shift 最常見）。
+
+不要放開，直到你看到一個紫色或黑色的選單畫面，標題通常是 "GNU GRUB"。
+
+提示： 如果你錯過了時機，直接進入了 Ubuntu 登入畫面，沒關係。只要將虛擬機「重新啟動 (Restart)」，然後在重啟的瞬間立刻按住 Shift 鍵即可。
+
+階段二：進入 Root 權限終端機
+在 GRUB 選單中，你應該會看到 "Ubuntu"、"Advanced options for Ubuntu" 等選項。
+
+使用鍵盤的向下箭頭 ↓，選擇 "Advanced options for Ubuntu"，然後按 Enter 鍵。
+
+你會看到一個新列表。請選擇結尾帶有 "(recovery mode)" 的那一行。
+
+例如：Ubuntu, with Linux 5.15.0-xx-generic (recovery mode)
+
+按 Enter 鍵，系統會開始載入一堆文字，最後會停在一個藍色的「Recovery Menu」選單。
+
+在這個藍色選單中，使用向下箭頭 ↓ 選擇 "root" (通常是 "Drop to root shell prompt" 或類似的選項)。
+
+按 Enter 鍵。你現在會看到畫面底部出現一個終端機提示符，看起來像 root@hostname:~#。
+
+階段三：重設密碼並重開機
+取得寫入權限： 依預設，系統是「唯讀 (read-only)」的。你需要輸入以下指令來讓它可以被修改，然後按 Enter：
+
+Bash
+mount -o rw,remount /
+找出你的使用者名稱 (Username)： 如果你不確定你的使用者名稱，輸入這個指令查看所有使用者資料夾，然後按 Enter：
+
+Bash
+ls /home
+它會列出你的使用者名稱 (例如 ubuntu 或 brian 之類的)。
+
+重設密碼： 現在，輸入 passwd 指令，後面跟著你的使用者名稱。 (請把 [your_username] 換成你自己的使用者名稱)
+
+Bash
+passwd [your_username]
+例如，如果你的使用者名稱是 brian，你就輸入：passwd brian
+
+設定新密碼：
+
+系統會提示你 Enter new UNIX password:。
+
+請輸入你的新密碼 (輸入時畫面上不會顯示任何字元或 * 號，這是正常的)，然後按 Enter。
+
+系統會要求你 Retype new UNIX password:。
+
+再次輸入相同的新密碼，然後按 Enter。
+
+確認成功： 如果你看到 password updated successfully 的訊息，就表示成功了！
+
+重新啟動：
+
+在 root@hostname:~# 提示符後面，直接輸入 reboot。
+
+按 Enter 鍵。
+
+你的 Ubuntu 虛擬機將會重新啟動。在登入畫面，你現在就可以使用剛剛設定的新密碼登入了。
+
+操作過程中有遇到任何問題或卡住的地方，請隨時告訴我！
+
+選root之後他叫我給rootpassword for maintainance
+
+啊，了解了。這表示你的 Ubuntu 系統在 recovery mode 下被設定了額外的安全保護，它會要求 root 密碼才能繼續。
+
+沒關係，我們有另一個更「強制」的方法，這個方法會繞過 (bypass) 這個密碼檢查，直接進入 root 權限。
+
+請你先將虛擬機「重新啟動 (Reset)」，然後跟我執行以下新步驟：
+
+💻 方案二：修改 GRUB 啟動參數
+階段一：進入 GRUB 編輯模式
+重啟虛擬機，同樣立刻按住 右側 Shift 鍵，直到再次看到 GRUB 選單 (紫色或黑色的選單)。
+
+這一次，請不要選擇 "Advanced options"。
+
+請將反白的光棒停留在第一個選項 (通常就是 "Ubuntu")。
+
+停在 "Ubuntu" 選項上，按下鍵盤上的 e 鍵 (代表 Edit 編輯)。
+
+階段二：修改啟動參數
+按下 e 之後，你會進入一個充滿文字的編輯畫面。
+
+使用鍵盤的向下箭頭 ↓，找到開頭是 linux 的那一行。
+
+這一行通常很長，中間可能會有 vmlinuz 之類的字。
+
+在這一行的結尾附近，你會找到類似 ro quiet splash 或 quiet splash $vt_handoff 這樣的字眼。
+
+請你：
+
+(刪除) 把 ro quiet splash $vt_handoff (或者你看到的 quiet splash 或 ro) 這些字刪除。
+
+(新增) 在同一行的結尾，補上這段文字： rw init=/bin/bash
+
+舉例來說：
+
+修改前 (範例)： linux /boot/vmlinuz-5.15.0-... root=UUID=... ro quiet splash $vt_handoff
+
+修改後 (範例)： linux /boot/vmlinuz-5.15.0-... root=UUID=... rw init=/bin/bash
+
+(你不需要管 root=UUID 那些，重點是把 ro quiet splash ... 換成 rw init=/bin/bash。)
+
+階段三：啟動並重設密碼
+修改完成後，按下 F10 鍵 (或是 Ctrl+X，畫面上方或下方通常會有提示) 來啟動。
+
+系統會跑一小段文字，然後你會直接進入一個終端機提示符，看起來像這樣： root@(none):/#
+
+恭喜，你現在就是 root 了！
+
+輸入以下指令來重設你的密碼 (記得把 [your_username] 換成你的使用者名稱)：
+
+Bash
+passwd [your_username]
+例如：passwd brian
+
+系統會提示你輸入新密碼 (輸入時看不到字元)，按 Enter。
+
+再次輸入新密碼，按 Enter。
+
+看到 password updated successfully 就表示成功了。
+
+階段四：重新啟動
+密碼修改成功後，請不要在終端機輸入 reboot 指令 (因為系統環境不完整，可能會出錯)。
+
+最安全的方法是：直接點擊 VirtualBox 視窗上方的選單，選擇「機器 (Machine)」->「重置 (Reset)」。
+
+虛擬機將會重新啟動，這次它會正常進入登入畫面。
+
+你現在就可以用剛剛設定的新密碼登入了！
+
+成功進去，但怎麼換terminal打不開了
+
+這是一個有點棘手的狀況，但通常是可以修復的。
+
+這是為什麼？
+你剛剛使用的 init=/bin/bash 方法是一種非常「原始」的啟動方式。它跳過了所有正常的系統服務和權限設定，只為了給你一個 root 終端機。
+
+當你重設密碼並重啟後，系統雖然正常開機了，但你上次「非正常」的登入可能導致你家目錄 (/home/your_username) 中某些設定檔的「權限 (permissions)」錯亂了。
+
+GUI 程式（如 Terminal）在啟動時需要讀寫這些設定檔，一旦權限不對，它就打不開了。
+
+如何修復它：使用 TTY (虛擬終端)
+既然圖形介面的 Terminal 打不開，我們就需要從系統的「純文字介面」(稱為 TTY 或 virtual console) 登入來修復它。
+
+請依照以下步驟操作：
+
+切換到 TTY：
+
+在你的 Ubuntu 虛擬機視窗中，按下組合鍵：Ctrl + Alt + F3。
+
+(VirtualBox 提示： 如果這個組合鍵沒反應，你可能需要先按一下 Host 鍵 (預設是**右邊的 Ctrl** 鍵)，放開後再按 Ctrl + Alt + F3。但通常直接按就可以。)
+
+登入純文字介面：
+
+你會看到一個全黑的畫面，顯示 [Your Ubuntu machine name] login:。
+
+輸入你的使用者名稱 (例如 brian)，按 Enter。
+
+在 Password: 提示符後，輸入你剛剛設定的新密碼 (輸入時不會顯示)，按 Enter。
+
+檢查是否登入成功：
+
+如果你成功登入，你會看到一個命令提示符，例如 brian@ubuntu:~$。
+
+如果登入失敗 (顯示 Login incorrect)，那表示你剛剛的密碼重設可能沒有成功，你需要**重新執行一次「方案二」**來重設密碼。
+
+如果你成功登入 TTY (步驟 3 成功了)
+這表示你的密碼是OK的，我們只需要修復權限問題。請在 brian@ubuntu:~$ 提示符後輸入以下指令：
+
+步驟 A：修復家目錄權限
+
+(請把 [your_username] 換成你自己的使用者名稱)
+
+Bash
+sudo chown -R [your_username]:[your_username] /home/[your_username]
+範例： 如果你的使用者名稱是 brian，指令就是： sudo chown -R brian:brian /home/brian
+
+它會要求你輸入密s碼 (Sudo password)，請再次輸入你的新密碼。
+
+這個指令會把你家目錄下所有檔案的「擁有者」都重新設回你自己。
+
+步驟 B：重新安裝 Terminal (以防萬一)
+
+我們順便重新安裝一下 Terminal 應用程式本身。
+
+Bash
+sudo apt update
+sudo apt install --reinstall gnome-terminal
+步驟 C：重新啟動
+
+所有指令都跑完後，輸入以下指令來重啟電腦：
+
+Bash
+sudo reboot
+電腦重啟後，請正常登入圖形介面，然後再試著點擊 Terminal 圖示，看看是否能打開了。
+
+請告訴我你卡在哪一個步驟，或者 TTY 是否能成功登入！
+
+your_username is not in sudoers file. this incident will be reported
+
+OK，這是一個更麻煩但同樣可以解決的問題。
+
+這是為什麼？
+這個錯誤 your_username is not in the sudoers file 意味著：
+
+你的使用者帳號目前失去了「Admin (管理員)」權限。
+
+在 Ubuntu 中，能執行 sudo 指令的權限是透過一個叫做 sudo (或 admin) 的「群組」來管理的。你的帳號目前不在這個群組裡，所以系統拒絕你使用 sudo。
+
+這很可能是因為我們之前的強制操作 (init=/bin/bash) 意外地破壞了某些系統設定。
+
+如何修復它：
+別擔心，我們必須再次進入 root 模式（就像我們重設密碼那樣），來手動把你的帳號加回 sudo 群組。
+
+這個過程分為兩大部分：1. 拿回 sudo 權限； 2. 修復 Terminal。
+
+第一部分：拿回 sudo 權限
+請你完全重複我們在「方案二」中的步驟，再次進入那個 root@(none):/# 終端機。
+
+重啟 虛擬機。
+
+按住 右側 Shift 進入 GRUB 選單。
+
+停在 "Ubuntu" 選項上，按 e 鍵編輯。
+
+找到 linux 開頭的那一行，刪除 ro quiet splash ... (或類似的字眼)。
+
+在同一行結尾加上 rw init=/bin/bash。
+
+按下 F10 或 Ctrl+X 啟動。
+
+【重點：進入 root 終端機後的新指令】
+
+當你看到 root@(none):/# 提示符後，請不要執行 passwd。 請依序輸入以下指令 (請把 [your_username] 換成你自己的使用者名稱)：
+
+(保險起見) 重新掛載檔案系統為可讀寫：
+
+Bash
+mount -o rw,remount /
+(關鍵指令) 將你的使用者帳號加回 sudo 群組：
+
+Bash
+usermod -aG sudo [your_username]
+例如，如果你的使用者名稱是 brian，指令就是： usermod -aG sudo brian
+
+(可選) 驗證：輸入以下指令查看你的群組：
+
+Bash
+groups [your_username]
+你應該會在一長串群組中看到 sudo 這個字。
+
+重啟虛擬機：
+
+完成後，同樣不要輸入 reboot。
+
+請直接點擊 VirtualBox 視窗選單的「機器 (Machine)」->「重置 (Reset)」。
+
+第二部分：修復 Terminal (在重啟後)
+現在你的 sudo 權限應該回來了，但你的 Terminal 還是壞的。我們現在就來修復它。
+
+重啟後，正常登入 Ubuntu 圖形介面。
+
+再次按下 Ctrl + Alt + F3 進入 TTY 純文字介面。
+
+輸入你的使用者名稱和新密碼登入。
+
+登入 TTY 成功後，你會看到 brian@ubuntu:~$ 提示符。
+
+現在，執行我們上次失敗的指令：
+
+測試 sudo 是否修復：
+
+Bash
+sudo ls
+系統現在應該會向你索取 [sudo] password for [your_username]:。
+
+請輸入你的密碼 (輸入時看不到)，按 Enter。
+
+如果它沒有再報錯 not in the sudoers file，而是成功執行 (可能顯示你家目錄的檔案)，就表示 sudo 權限回來了！
+
+(上次的步驟) 修復家目錄權限：
+
+Bash
+sudo chown -R [your_username]:[your_username] /home/[your_username]
+(範例：sudo chown -R brian:brian /home/brian)
+
+(上次的步驟) 重新安裝 Terminal：
+
+Bash
+sudo apt update
+sudo apt install --reinstall gnome-terminal
+最後一次重啟：
+
+Bash
+sudo reboot
+這一次重開機後，一切就應該都正常了。你可以登入圖形介面，sudo 權限和 Terminal 應用程式應該都恢復了。
+
+這個步驟比較多，在哪一步卡住了請隨時告訴我。
+
+都有重新安裝 但還是叫不起來 如果再folder 裡面啟動terminal 就會顯示folder壞掉
+
+OK，這真的是一個很棘手的狀況，你已經處理了密碼和 sudo 權限這兩個最大的問題，我們只差最後一步了。
+
+「資料夾壞掉」這個訊息通常是個「煙霧彈」，真正的意思是：「我 (系統) 試圖在 這個資料夾打開 Terminal，但是我無法啟動 Terminal 應用程式，所以我猜是這個資料夾有問題」。
+
+這表示 gnome-terminal 應用程式本身可能沒有損壞，而是你個人帳號中關於 Terminal 的設定檔在之前的混亂中損毀了。reinstall (重新安裝) 指令不會去動到個人的設定檔，所以問題還在。
+
+最終修復計畫：
+我們需要再次進入 TTY (純文字介面)，做兩件事：
+
+(診斷用) 安裝一個超級輕量、幾乎不可能壞掉的備用 Terminal (叫做 xterm)。
+
+重設 (Reset) gnome-terminal 在你帳號裡的所有設定。
+
+請再次回到你的好朋友 TTY：
+
+按下 Ctrl + Alt + F3。
+
+用你的使用者名稱和新密碼登入。
+
+登入 TTY 成功後 (brian@ubuntu:~$ 提示符)，請依序執行以下指令：
+
+步驟一：安裝 xterm (備用終端機)
+這能讓我們確認是不是只有 gnome-terminal 壞了。
+
+Bash
+sudo apt update
+sudo apt install xterm
+(這只會安裝一個幾 MB 的小程式，不用擔心)
+
+步驟二：重設 gnome-terminal 的設定檔
+這是最關鍵的指令。它會把你所有 gnome-terminal 的個人設定（字型大小、配色方案等）恢復到出廠預設值。
+
+Bash
+gsettings reset-recursively org.gnome.Terminal
+(這個指令不需要 sudo，它只會動你家目錄的東西。如果它執行成功，通常不會有任何訊息輸出)
+
+步驟三：再次確保權限 (以防萬一)
+我們再執行一次我們之前用過的權限修復指令，確保新產生的設定檔權限也是對的。
+
+Bash
+sudo chown -R [your_username]:[your_username] /home/[your_username]
+(範例：sudo chown -R brian:brian /home/brian)
+
+步驟四：重啟
+Bash
+sudo reboot
+重啟後的檢查：
+電腦重啟後，請正常登入圖形介面：
+
+首先，請立刻試著點擊「Terminal」 (Gnome Terminal) 的圖示。 剛剛的 gsettings 指令有很高的機率已經修復它了。
+
+如果它還是打不开...
+
+請去你的「應用程式」選單 (按 Windows 鍵)，找一個叫做 xterm 的程式 (它圖示很醜，一個黑色的 X)。
+
+點擊 xterm 看看它是否能打開？
+
+如果 xterm 能打開 (會彈出一個很像 90 年代風格的終端機)，這就 100% 證實是 gnome-terminal 自己的問題。
+
+如果連 xterm 都打不開，那問題可能比我們想的更深層。
+
+請告訴我，執行完這些步驟後，gnome-terminal 或是 xterm 能打開嗎？
+
+xterm打得開 還是我就用xterm就好
+
+太好了！xterm 能打開，這就證實了你整個系統、sudo 權限、顯示伺服器 (X11) 全都是正常的。
+
+這 100% 把問題鎖定在 gnome-terminal 和你個人帳號設定的「獨特」互動上。
+
+回答你的問題：
+你「可以」只用 xterm 嗎？
+
+可以，但你大概會用得很痛苦。
+
+xterm 是一個「古董級」的終端機，它大概在 1984 年就存在了。
+
+它功能齊全，可以跑所有指令。
+
+但是，它極度簡陋：沒有分頁 (tabs)、複製貼上很詭異 (不是 Ctrl+C / Ctrl+V)、字型不好看、配色方案很陽春。
+
+把它當作修車時用的「緊急備用胎」可以，但你不會想開著它橫貫台灣。
+
+🚀 更好的建議：安裝一個「新的」現代終B端機
+既然 xterm 能用，我們就有能力從 xterm 內部去安裝一個全新的、不同的、現代的終端機。
+
+這就像你的 Chrome 壞了，我們不去修它，我們直接改用 Firefox。
+
+我推薦你安裝 tilix。它是一個非常受歡迎、功能強大、且外觀與 Gnome 系統很搭的終端機。
+
+請在 xterm 裡面執行以下步驟：
+安裝 Tilix： 在 xterm 裡面輸入 (或複製貼上) 以下指令，然後按 Enter：
+
+Bash
+sudo apt install tilix
+它會問你密碼，你就輸入你的新密碼。
+
+它會問你 [Y/n]，你就按 Y 然後按 Enter。
+
+安裝完成後：
+
+你可以關掉 xterm。
+
+按下你的 Windows 鍵，在應用程式選單搜尋 "Tilix"。
+
+點擊 Tilix 的圖示。
+
+因為 tilix 是全新的安裝，它會用全新的設定檔，它有 99.9% 的機率會正常啟動。
+
+你就可以把 tilix 釘選 (Pin) 到你的常用工具列，完全取代那個壞掉的 gnome-terminal，然後開心地繼續你的工作。
+
+你覺得這個方案如何？
+
+VM跟本機的剪貼簿可以共用嗎
+
+是的，絕對可以！
+
+要讓 VirtualBox 裡的 Ubuntu 和你本機的剪貼簿共用（雙向複製貼上），你需要完成兩個主要步驟：
+
+在 VirtualBox 中開啟「共用剪貼簿」功能。
+
+在你的 Ubuntu 虛擬機內部安裝「Guest Additions (客體額外功能)」。
+
+步驟一：開啟「共用剪貼簿」設定
+這是最簡單的一步。
+
+在 VirtualBox 管理程式中，選中你的 Ubuntu 虛擬機 (請先不要開機，在關機狀態下設定)。
+
+點擊「設定值 (Settings)」。
+
+切換到「一般 (General)」分頁。
+
+再點選「進階 (Advanced)」子分頁。
+
+你會看到「共用剪貼簿 (Shared Clipboard)」的選項，請將它從「停用」改為「雙向 (Bidirectional)」。
+
+(可選) 你也可以順便把隔壁的「拖放 (Drag'n'Drop)」也設為「雙向」，這樣你就可以直接拖檔案進出虛擬機了。
+
+按下「確定」儲存。
+
+步驟二：在 Ubuntu 內安裝「Guest Additions」
+這是讓剪貼簿「動起來」的關鍵驅動程式。既然你之前已經修復了 sudo 和 Terminal (或 xterm)，這一步應該會很順利。
+
+請啟動你的 Ubuntu 虛擬機，然後打開你的終端機 (Tilix 或 xterm)：
+
+方法 A：最簡單的安裝方式 (推薦優先嘗試)
+我建議你先試試這個方法，它使用 Ubuntu 內建的套件來安裝，最單純：
+
+更新套件清單：
+
+Bash
+sudo apt update
+安裝 Guest Additions 相關套件：
+
+Bash
+sudo apt install virtualbox-guest-x11
+(它可能會一併安裝 virtualbox-guest-utils 和 virtualbox-guest-dkms，這是正常的)
+
+重新啟動： 安裝完成後，必須重新啟動虛擬機：
+
+Bash
+sudo reboot
+重啟後，等它進入桌面，試著在你本機複製一段文字，然後到 Ubuntu 虛擬機裡貼上看看。如果成功了，就大功告成了！
+
+方法 B：如果方法 A 失敗 (完整的 CD 安裝法)
+如果方法 A 失敗了，請執行這個「官方」安裝方法。
+
+安裝編譯工具： Guest Additions 需要在你的 Ubuntu 裡「編譯」驅動程式，所以需要安裝工具 (你之前可能裝過了，但再執行一次也沒關係)：
+
+Bash
+sudo apt update
+sudo apt install build-essential linux-headers-$(uname -r) dkms
+插入 Guest Additions CD：
+
+在 VirtualBox 虛擬機視窗的最上方選單中，找到「裝置 (Devices)」。
+
+點擊「插入 Guest Additions CD 映像... (Insert Guest Additions CD image...)」。
+
+執行安裝：
+
+這個動作會在你的 Ubuntu 桌面跳出一個光碟圖示，並詢問你是否要「執行」。
+
+如果它有跳出詢問，請點擊「執行 (Run)」，然後輸入你的密碼。
+
+如果它沒有跳出詢問：
+
+請打開你的「檔案」App。
+
+在左側會看到一個光碟機，點進去。
+
+在裡面找到一個叫做 autorun.sh 或 VBoxLinuxAdditions.run 的檔案。
+
+在空白處按右鍵，選擇「在終端機中開啟」。
+
+在終端機中輸入以下指令：
+
+Bash
+sudo ./VBoxLinuxAdditions.run
+重新啟動：
+
+等它跑完所有安裝程序後，同樣必須重啟虛擬機：
+
+Bash
+sudo reboot
+完成以上步驟 (無論 A 或 B) 並重啟後，你的本機和 Ubuntu 虛擬機的剪貼簿就可以共用了！
+
+你需要我針對哪個步驟再做詳細說明嗎？
+
+ubuntu scp port22 沒辦法使用
+
+你好，這是一個非常經典的問題！
+
+scp 沒辦法在 Port 22 使用，99% 的情況下，這代表你的 Ubuntu 虛擬機上的 ssh 服務有問題。
+
+scp (Secure Copy) 只是 ssh (Secure Shell) 服務之上的一個檔案傳輸功能。沒有 ssh，就沒有 scp。
+
+你是指哪一種情況？
+為了準確幫你除錯，我需要先知道你的「方向」：
+
+情況 A： 你想從本機 (例如 Windows/Mac) scp 檔案 "到" 你的 Ubuntu 虛擬機。 (Ubuntu 是伺服器 Server)
+
+情況 B： 你想從 Ubuntu 虛擬機 scp 檔案 "到" 你的本機或其他電腦。 (Ubuntu 是客戶端 Client)
+
+我猜你非常有可能是**「情況 A」**，而新安裝的 Ubuntu 預設是不會安裝 SSH 伺服器的。
+
+🚀 解決方案 (針對情況 A：Ubuntu 當作 Server)
+請在你的 Ubuntu 虛擬機的終端機 (Tilix 或 xterm) 中執行以下檢查和修復步驟：
+
+步驟一：安裝並啟用 openssh-server (最可能的病因)
+安裝 SSH 伺服器：
+
+Bash
+sudo apt update
+sudo apt install openssh-server
+啟動並設定為開機自啟：
+
+Bash
+sudo systemctl start ssh
+sudo systemctl enable ssh
+檢查服務狀態：
+
+Bash
+systemctl status ssh
+你應該會看到綠色的 active (running) 字樣。如果看到了，ssh 服務就跑起來了！
+
+步驟二：檢查防火牆 (UFW)
+如果 ssh 正在運行，但你仍然連不上，那很可能是被防火牆擋住了。
+
+允許 SSH (Port 22) 通過防火牆：
+
+Bash
+sudo ufw allow ssh
+(這條指令等同於 sudo ufw allow 22/tcp)
+
+查看防火牆狀態：
+
+Bash
+sudo ufw status
+如果你看到 Status: active，請確保 22/tcp (或 ssh) 出現在 ALLOW IN 的清單中。
+
+如果狀態是 inactive，那防火牆就沒有開啟，不是問題所在。
+
+步驟三：(VirtualBox 關鍵) 檢查你的網路設定
+這是 VirtualBox 特有的問題！ 你的虛擬機如何連上網路，會直接決定你能不能 scp 進去。
+
+在 VirtualBox 管理程式中，選中你的 Ubuntu 虛擬機，點擊「設定值」->「網路」。
+
+查看你的「附加到 (Attached to)」是什麼模式？
+
+如果是 NAT (預設模式)：
+
+你的 Ubuntu 虛擬機沒有「真正」的 IP 位址，它躲在 VirtualBox 後面。
+
+你無法從本機直接 scp 到它的 IP。
+
+解法： 你必須設定「通訊埠轉發 (Port Forwarding)」。
+
+在「網路」設定頁面，點開「進階」，點擊「通訊埠轉發」，新增一條規則：
+
+名稱：ssh
+
+主機 IP：127.0.0.1
+
+主機連接埠：2222 (你可以自訂，例如 2222)
+
+客體 IP：(留白)
+
+客體連接埠：22
+
+設定完後，你要 scp 的對象不是虛擬機的 IP，而是你的本機：
+
+Bash
+# -P 2222 (大寫 P) 是指定你剛剛設定的主機連接埠
+scp -P 2222 /path/to/local/file [your_username]@127.0.0.1:/path/to/vm/destination
+如果是 橋接介面卡 (Bridged Adapter)：
+
+這是最簡單的模式。 你的虛擬機會從你的路由器那裡拿到一個獨立的 IP (例如 192.168.1.10)，和你的本機電腦平起平坐。
+
+你只需要在 Ubuntu 終端機用 ip a 指令查到它的 IP。
+
+然後就可以直接 scp：
+
+Bash
+# -p 22 (小寫 p) 是預設值，可以省略
+scp /path/to/local/file [your_username]@[VM_IP_ADDRESS]:/path/to/vm/destination
+如果是情況 B (Ubuntu 當作 Client)
+這比較罕見，因為 openssh-client (包含 scp 指令) 幾乎都是預安裝的。
+
+檢查 scp 指令是否存在：
+
+Bash
+which scp
+如果沒有顯示路徑 (例如 /usr/bin/scp)，就表示沒安裝。
+
+安裝 Client：
+
+Bash
+sudo apt install openssh-client
+偵錯資訊
+為了能更準確地幫你，請告訴我：
+
+你是情況 A 還是 情況 B？
+
+你在執行 scp 時，終端機顯示的確切錯誤訊息是什麼？ (例如 Connection refused, Connection timed out, 還是 Permission denied？)
+
+你的 VirtualBox 網路模式是 NAT 還是 橋接？
